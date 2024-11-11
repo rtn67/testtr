@@ -1,0 +1,40 @@
+<!-- Trading Pairs Section -->
+<div class="mb-6">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Trading Pairs</h2>
+    
+    <!-- Selected Pairs Display -->
+    <div id="selectedPairs" class="mb-4 space-y-2">
+        <!-- Selected pairs will be displayed here -->
+    </div>
+    
+    <!-- Single Pair Selector -->
+    <div id="singlePairSelector" class="mb-4">
+        <select id="pairSelect" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <option value="">Select trading pair</option>
+        </select>
+    </div>
+    
+    <!-- Quote Currency Buttons -->
+    <div class="flex flex-wrap gap-2">
+        <button type="button" 
+                data-quote="USDT" 
+                class="quote-btn px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            USDT_ALL
+        </button>
+        <button type="button" 
+                data-quote="BTC" 
+                class="quote-btn px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            BTC_ALL
+        </button>
+        <button type="button" 
+                data-quote="ETH" 
+                class="quote-btn px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            ETH_ALL
+        </button>
+        <button type="button" 
+                data-quote="USDC" 
+                class="quote-btn px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            USDC_ALL
+        </button>
+    </div>
+</div>

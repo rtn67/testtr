@@ -1,0 +1,173 @@
+<!-- RSI Parameters -->
+<template id="rsi-params-template">
+    <div class="grid grid-cols-3 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Period</label>
+            <input type="number" 
+                   class="rsi-period mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="14" min="1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Overbought</label>
+            <input type="number" 
+                   class="rsi-overbought mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="70" min="0" max="100">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Oversold</label>
+            <input type="number" 
+                   class="rsi-oversold mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="30" min="0" max="100">
+        </div>
+    </div>
+</template>
+
+<!-- MACD Parameters -->
+<template id="macd-params-template">
+    <div class="grid grid-cols-3 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Fast Period</label>
+            <input type="number" 
+                   class="macd-fast mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="12" min="1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Slow Period</label>
+            <input type="number" 
+                   class="macd-slow mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="26" min="1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Signal Period</label>
+            <input type="number" 
+                   class="macd-signal mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="9" min="1">
+        </div>
+    </div>
+</template>
+
+<!-- Moving Average Parameters -->
+<template id="ma-params-template">
+    <div class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Type</label>
+                <select class="ma-type mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    <option value="sma">Simple MA</option>
+                    <option value="ema">Exponential MA</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Period</label>
+                <input type="number" 
+                       class="ma-period mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                       value="20" min="1">
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Compare With</label>
+                <select class="ma-compare mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    <option value="price">Price</option>
+                    <option value="ma">Another MA</option>
+                </select>
+            </div>
+            <div class="ma-second-period hidden">
+                <label class="block text-sm font-medium text-gray-700">Second MA Period</label>
+                <input type="number" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                       value="50" min="1">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Bollinger Bands Parameters -->
+<template id="bb-params-template">
+    <div class="grid grid-cols-3 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Period</label>
+            <input type="number" 
+                   class="bb-period mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="20" min="1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Standard Deviations</label>
+            <input type="number" 
+                   class="bb-std mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="2" min="0.1" step="0.1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">%B Level</label>
+            <input type="number" 
+                   class="bb-level mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="0.5" min="0" max="1" step="0.1">
+        </div>
+    </div>
+</template>
+
+<!-- Stochastic Parameters -->
+<template id="stoch-params-template">
+    <div class="grid grid-cols-3 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">K Period</label>
+            <input type="number" 
+                   class="stoch-k mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="14" min="1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">D Period</label>
+            <input type="number" 
+                   class="stoch-d mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="3" min="1">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Smoothing</label>
+            <input type="number" 
+                   class="stoch-smooth mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="3" min="1">
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mt-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Overbought</label>
+            <input type="number" 
+                   class="stoch-overbought mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="80" min="0" max="100">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Oversold</label>
+            <input type="number" 
+                   class="stoch-oversold mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                   value="20" min="0" max="100">
+        </div>
+    </div>
+</template>
+
+<!-- TradingView Signal Parameters -->
+<template id="tv-params-template">
+    <div class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Signal Type</label>
+            <select class="tv-signal-type mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                <option value="strong_buy">Strong Buy</option>
+                <option value="buy">Buy</option>
+                <option value="neutral">Neutral</option>
+                <option value="sell">Sell</option>
+                <option value="strong_sell">Strong Sell</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Timeframe</label>
+            <select class="tv-timeframe mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                <option value="1m">1 minute</option>
+                <option value="5m">5 minutes</option>
+                <option value="15m">15 minutes</option>
+                <option value="30m">30 minutes</option>
+                <option value="1h">1 hour</option>
+                <option value="4h">4 hours</option>
+                <option value="1d">1 day</option>
+            </select>
+        </div>
+    </div>
+</template>

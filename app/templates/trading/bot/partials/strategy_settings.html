@@ -1,0 +1,63 @@
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Strategy Settings</h2>
+
+    <!-- Max Active Deals -->
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700">Max Active Deals</label>
+        <div class="mt-1">
+            <input type="number" 
+                   id="maxActiveDeals" 
+                   min="1" 
+                   value="1"
+                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <p class="mt-1 text-sm text-gray-500">Maximum number of simultaneous trades</p>
+        </div>
+    </div>
+
+    <!-- Strategy Type -->
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700">Strategy</label>
+        <div class="mt-1 flex space-x-4">
+            <button type="button" 
+                    data-strategy="long" 
+                    class="strategy-btn px-4 py-2 rounded-md border transition-colors duration-200">
+                Long
+            </button>
+            <button type="button" 
+                    data-strategy="short" 
+                    class="strategy-btn px-4 py-2 rounded-md border transition-colors duration-200">
+                Short
+            </button>
+        </div>
+    </div>
+
+    <!-- Base Order Size -->
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700">Base Order Size</label>
+        <div class="mt-1">
+            <input type="number" 
+                   id="baseOrderSize" 
+                   min="0" 
+                   step="0.01"
+                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <p class="mt-1 text-sm text-gray-500">Initial order size for each trade</p>
+        </div>
+    </div>
+
+    <!-- Start Order Type -->
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700">Start Order Type</label>
+        <div class="mt-1 flex space-x-4">
+            <button type="button" 
+                    data-order-type="market" 
+                    class="order-type-btn px-4 py-2 rounded-md border transition-colors duration-200">
+                Market
+            </button>
+            <button type="button" 
+                    data-order-type="limit" 
+                    class="order-type-btn px-4 py-2 rounded-md border transition-colors duration-200">
+                Limit
+            </button>
+        </div>
+    </div>
+</div>

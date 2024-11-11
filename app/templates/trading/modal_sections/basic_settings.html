@@ -1,0 +1,30 @@
+<div class="bg-gray-50 p-4 rounded-lg space-y-4">
+    <h4 class="font-medium text-gray-700">Basic Settings</h4>
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Bot Name</label>
+            <input type="text" name="name" required 
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                   placeholder="Enter bot name">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Trading Pair</label>
+            <input type="text" id="selectedPair" name="trading_pair" readonly required 
+                   class="mt-1 block w-full bg-gray-100 border-gray-300 rounded-md shadow-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Initial Investment (USDT)</label>
+            <input type="number" name="initial_investment" required min="10" step="1" 
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                   placeholder="Enter amount">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Entry Type</label>
+            <select name="entry_type" required 
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="signal">Signal Based</option>
+                <option value="manual">Manual Entry</option>
+            </select>
+        </div>
+    </div>
+</div>

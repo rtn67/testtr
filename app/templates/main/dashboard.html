@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <!-- Dashboard Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Trading Dashboard</h1>
+        <a href="{{ url_for('trading.trading_pairs') }}" 
+           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+            Create New Robot
+        </a>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        <!-- Total Robots -->
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Active Robots</dt>
+                            <dd class="text-lg font-medium text-gray-900" id="activeRobotsCount">0</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Investment -->
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Total Investment</dt>
+                            <dd class="text-lg font-medium text-gray-900" id="totalInvestment">$0.00</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Profit/Loss -->
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Total P/L</dt>
+                            <dd class="text-lg font-medium text-gray-900" id="totalPnL">0.00%</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCA Events -->
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 truncate">DCA Events (24h)</dt>
+                            <dd class="text-lg font-medium text-gray-900" id="dcaEvents">0</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robots List -->
+    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+        <div class="px-4 py-5 sm:px-6">
+            <h2 class="text-lg font-medium text-gray-900">Your Robots</h2>
+        </div>
+        <div class="border-t border-gray-200">
+            <ul id="robotsList" class="divide-y divide-gray-200">
+                <!-- Robots will be loaded here -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadRobots();
+});
+
+async function loadRobots() {
+    try {
+        const response = await fetch('/api/trading/robots');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            updateDashboard(data.data);
+        } else {
+            throw new Error(data.message || 'Failed to load robots');
+        }
+    } catch (error) {
+        console.error('Error loading robots:', error);
+    }
+}
+
+function updateDashboard(robots) {
+    // Update stats
+    const activeRobots = robots.filter(r => r.status === 'active');
+    document.getElementById('activeRobotsCount').textContent = activeRobots.length;
+    
+    const totalInvestment = robots.reduce((sum, r) => sum + (r.total_invested || 0), 0);
+    document.getElementById('totalInvestment').textContent = `$${totalInvestment.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    
+    const totalPnL = robots.reduce((sum, r) => sum + (r.unrealized_pnl || 0), 0);
+    document.getElementById('totalPnL').textContent = `${totalPnL.toFixed(2)}%`;
+    
+    // Update robots list
+    const robotsList = document.getElementById('robotsList');
+    robotsList.innerHTML = robots.map(robot => `
+        <li>
+            <div class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <p class="text-sm font-medium text-indigo-600 truncate">${robot.name}</p>
+                        <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${robot.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                            ${robot.status}
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="toggleRobot(${robot.id})" 
+                                class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm 
+                                ${robot.status === 'active' ? 'text-red-700 bg-red-100 hover:bg-red-200' : 'text-green-700 bg-green-100 hover:bg-green-200'}">
+                            ${robot.status === 'active' ? 'Stop' : 'Start'}
+                        </button>
+                        <button onclick="viewRobotDetails(${robot.id})" 
+                                class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200">
+                            Details
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-2 sm:flex sm:justify-between">
+                    <div class="sm:flex">
+                        <p class="flex items-center text-sm text-gray-500">
+                            Investment: $${robot.initial_investment.toLocaleString()}
+                        </p>
+                        <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                            P/L: ${(robot.unrealized_pnl || 0).toFixed(2)}%
+                        </p>
+                    </div>
+                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                        <p>Created: ${new Date(robot.created_at).toLocaleDateString()}</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    `).join('');
+}
+
+async function toggleRobot(robotId) {
+    try {
+        const response = await fetch(`/api/trading/robot/${robotId}/toggle`, {
+            method: 'POST'
+        });
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            loadRobots();  // Reload the dashboard
+        } else {
+            throw new Error(data.message || 'Failed to toggle robot');
+        }
+    } catch (error) {
+        console.error('Error toggling robot:', error);
+        alert('Failed to toggle robot: ' + error.message);
+    }
+}
+
+function viewRobotDetails(robotId) {
+    window.location.href = `/trading/robot/${robotId}`;
+}
+</script>
+{% endblock %}

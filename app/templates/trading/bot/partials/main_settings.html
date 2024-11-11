@@ -1,0 +1,53 @@
+<div class="bg-white rounded-lg shadow p-6">
+    <!-- Bot Header -->
+    <div class="border-b border-gray-200 pb-4 mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">DCA Bot</h1>
+    </div>
+
+    <!-- Bot Name -->
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700">Name</label>
+        <input type="text" 
+               id="botName" 
+               name="botName"
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+               placeholder="Enter bot name">
+    </div>
+
+    <!-- Exchange and Bot Type -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+        <!-- Exchange Selection -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Exchange</label>
+            <select id="exchange" 
+                    name="exchange"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <option value="coinex">CoinEx</option>
+                <!-- Add more exchanges as needed -->
+            </select>
+        </div>
+
+        <!-- Bot Type Selection -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Bot Type</label>
+            <div class="mt-1 flex space-x-4">
+                <button type="button" 
+                        data-type="single" 
+                        class="bot-type-btn px-4 py-2 rounded-md border transition-colors duration-200"
+                        onclick="selectBotType(this, 'single')">
+                    Single-Pair
+                </button>
+                <button type="button" 
+                        data-type="multi" 
+                        class="bot-type-btn px-4 py-2 rounded-md border transition-colors duration-200"
+                        onclick="selectBotType(this, 'multi')">
+                    Multi-Pair
+                </button>
+            </div>
+        </div>
+		{% include 'trading/bot/partials/trading_pairs.html' %}
+		<!-- In app/templates/trading/bot/partials/main_settings.html -->
+        <!-- After the Trading Pairs section -->
+        {% include 'trading/bot/partials/strategy_settings.html' %}
+    </div>
+</div>

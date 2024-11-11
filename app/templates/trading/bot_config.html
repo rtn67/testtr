@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}Bot Configuration{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Left Panel - Main Settings -->
+    <div class="w-2/3 p-6">
+        <div class="bg-white rounded-lg shadow p-6">
+            <h1 class="text-2xl font-bold mb-6">DCA Bot Configuration</h1>
+            
+            <!-- Bot Name -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Bot Name</label>
+                <input type="text" id="botName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            </div>
+
+            <!-- Exchange & Bot Type -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Exchange</label>
+                    <select id="exchange" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="coinex">CoinEx</option>
+                        <!-- Add more exchanges as needed -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Bot Type</label>
+                    <div class="mt-1 flex space-x-4">
+                        <button type="button" data-type="single" class="bot-type-btn px-4 py-2 rounded-md border">
+                            Single Pair
+                        </button>
+                        <button type="button" data-type="multi" class="bot-type-btn px-4 py-2 rounded-md border">
+                            Multi Pair
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trading Pairs -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Trading Pairs</label>
+                <div id="selectedPairs" class="mb-2">
+                    <!-- Selected pairs will be shown here -->
+                </div>
+                <div class="grid grid-cols-4 gap-2 mb-2">
+                    <button type="button" data-quote="USDT" class="quote-btn px-3 py-1 text-sm rounded-md border">
+                        USDT_ALL
+                    </button>
+                    <button type="button" data-quote="BTC" class="quote-btn px-3 py-1 text-sm rounded-md border">
+                        BTC_ALL
+                    </button>
+                    <button type="button" data-quote="ETH" class="quote-btn px-3 py-1 text-sm rounded-md border">
+                        ETH_ALL
+                    </button>
+                    <button type="button" data-quote="USDC" class="quote-btn px-3 py-1 text-sm rounded-md border">
+                        USDC_ALL
+                    </button>
+                </div>
+                <select id="tradingPair" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <!-- Trading pairs will be populated here -->
+                </select>
+            </div>
+
+            <!-- Strategy Settings -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium text-gray-900 mb-4">Strategy</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Max Active Deals</label>
+                        <input type="number" id="maxDeals" min="1" value="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Direction</label>
+                        <div class="mt-1 flex space-x-4">
+                            <button type="button" data-direction="long" class="direction-btn px-4 py-2 rounded-md border">
+                                Long
+                            </button>
+                            <button type="button" data-direction="short" class="direction-btn px-4 py-2 rounded-md border">
+                                Short
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Settings -->
+            <div class="mb-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Base Order Size ($)</label>
+                        <input type="number" id="baseOrderSize" min="0" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Order Type</label>
+                        <div class="mt-1 flex space-x-4">
+                            <button type="button" data-type="market" class="order-type-btn px-4 py-2 rounded-md border">
+                                Market
+                            </button>
+                            <button type="button" data-type="limit" class="order-type-btn px-4 py-2 rounded-md border">
+                                Limit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety Orders -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium text-gray-900 mb-4">Safety Orders</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Safety Order Size ($)</label>
+                        <input type="number" id="safetyOrderSize" min="0" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Max Safety Orders</label>
+                        <input type="number" id="maxSafetyOrders" min="1" max="10" value="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Price Deviation (%)</label>
+                        <input type="number" id="priceDeviation" min="0.1" step="0.1" value="2.5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Safety Step Scale</label>
+                        <input type="number" id="safetyStepScale" min="1" step="0.1" value="1.2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Take Profit Settings -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium text-gray-900 mb-4">Take Profit</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Target Profit (%)</label>
+                        <input type="number" id="targetProfit" min="0.1" step="0.1" value="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Profit Type</label>
+                        <select id="profitType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="total">Total Volume</option>
+                            <option value="base">From Base Order</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trailing Settings -->
+            <div class="mb-6">
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="trailingEnabled" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <label class="ml-2 block text-sm font-medium text-gray-700">Enable Trailing</label>
+                </div>
+                <div id="trailingSettings" class="hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Trailing Deviation (%)</label>
+                            <input type="number" id="trailingDeviation" min="0.1" step="0.1" value="0.3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stop Loss Settings -->
+            <div class="mb-6">
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="stopLossEnabled" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <label class="ml-2 block text-sm font-medium text-gray-700">Enable Stop Loss</label>
+                </div>
+                <div id="stopLossSettings" class="hidden">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Stop Loss (%)</label>
+                            <input type="number" id="stopLoss" min="0.1" step="0.1" value="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Panel - Assistant & Calculations -->
+    <div class="w-1/3 p-6">
+        <div class="bg-white rounded-lg shadow">
+            <!-- Tabs -->
+            <div class="border-b border-gray-200">
+                <nav class="flex -mb-px">
+                    <button class="tab-btn active px-4 py-2 border-b-2 font-medium text-sm" data-tab="assistant">
+                        Assistant
+                    </button>
+                    <button class="tab-btn px-4 py-2 border-b-2 font-medium text-sm" data-tab="chart">
+                        Chart
+                    </button>
+                    <button class="tab-btn px-4 py-2 border-b-2 font-medium text-sm" data-tab="table">
+                        Table
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Assistant Tab -->
+                <div id="assistantTab" class="tab-content">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Available Balance</label>
+                            <div class="mt-1 text-lg font-semibold text-gray-900">$<span id="availableBalance">0.00</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Max Amount for Bot</label>
+                            <div class="mt-1 text-lg font-semibold text-gray-900">$<span id="maxBotAmount">0.00</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Max Safety Order Price Deviation</label>
+                            <div class="mt-1 text-lg font-semibold text-gray-900"><span id="maxDeviation">5</span>%</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Total Balance Usage</label>
+                            <div class="mt-1 text-lg font-semibold text-gray-900"><span id="balanceUsage">0</span>%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Tab -->
+                <div id="chartTab" class="tab-content hidden">
+                    <div id="dcaChart" class="h-96">
+                        <!-- Chart will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Table Tab -->
+                <div id="tableTab" class="tab-content hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="ordersTable">
+                            <!-- Orders will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <div class="p-6 border-t border-gray-200">
+                <button id="startBot" class="w-full px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Start Bot
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script

@@ -1,0 +1,152 @@
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Take Profit Settings</h2>
+
+    <!-- Take Profit Type Selection -->
+    <div class="flex space-x-4 mb-6">
+        <button type="button" 
+                data-tp-type="price" 
+                class="tp-type-btn px-4 py-2 rounded-md border transition-colors duration-200">
+            Price Change %
+        </button>
+        <button type="button" 
+                data-tp-type="condition" 
+                class="tp-type-btn px-4 py-2 rounded-md border transition-colors duration-200">
+            Exit Conditions
+        </button>
+    </div>
+
+    <!-- Price Change Settings -->
+    <div id="priceChangeSettings" class="space-y-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Profit Type</label>
+            <select id="profitType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                <option value="base">Percentage from base order</option>
+                <option value="total">Percentage from total volume</option>
+            </select>
+        </div>
+
+        <!-- Target Profit -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Target Profit (%)</label>
+            <input type="number" 
+                   id="targetProfit" 
+                   min="0.1" 
+                   step="0.1" 
+                   value="2" 
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+        </div>
+
+        <!-- Partial Take Profit -->
+        <div>
+            <div class="flex items-center mb-4">
+                <input type="checkbox" 
+                       id="enablePartialTP" 
+                       class="rounded border-gray-300 text-indigo-600">
+                <label class="ml-2 text-sm font-medium text-gray-700">Enable Partial Take Profit</label>
+            </div>
+            
+            <div id="partialTPSettings" class="space-y-4 hidden">
+                <div id="tpLevels" class="space-y-4">
+                    <!-- TP levels will be added here -->
+                </div>
+                
+                <button type="button" 
+                        id="addTPLevel"
+                        class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    Add Level
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exit Conditions Settings -->
+    <div id="exitConditionsSettings" class="space-y-6 hidden">
+        <div id="exitConditions" class="space-y-4">
+            <!-- Similar structure to entry conditions -->
+            <div class="condition-group" data-condition-id="exit-1">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-medium text-gray-700">Exit Condition 1</label>
+                </div>
+
+                <!-- Indicator Selection -->
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <select class="exit-indicator-select w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="">Select Indicator</option>
+                            <option value="rsi">RSI</option>
+                            <option value="macd">MACD</option>
+                            <option value="ma">Moving Average</option>
+                            <option value="bb">Bollinger Band %B</option>
+                            <option value="stoch">Stochastic</option>
+                            <option value="supertrend">SuperTrend</option>
+                            <option value="atr">ATR</option>
+                            <option value="adx">ADX</option>
+                            <option value="ichi">Ichimoku Cloud</option>
+                            <option value="pivot">Pivot Points</option>
+                            <option value="tv">TradingView Signal</option>
+                        </select>
+                    </div>
+                    <div class="exit-indicator-params"></div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" 
+                id="addExitCondition"
+                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Add Exit Condition
+        </button>
+
+        <!-- Exit Condition Combination -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Exit Condition Combination</label>
+            <select id="exitConditionCombination" 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                <option value="and">All conditions must be met (AND)</option>
+                <option value="or">Any condition can be met (OR)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Trailing Settings -->
+    <div class="mt-6 pt-6 border-t border-gray-200">
+        <div class="flex items-center mb-4">
+            <input type="checkbox" 
+                   id="enableTrailing" 
+                   class="rounded border-gray-300 text-indigo-600">
+            <label class="ml-2 text-sm font-medium text-gray-700">Enable Trailing</label>
+        </div>
+        
+        <div id="trailingSettings" class="space-y-4 hidden">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Trailing Deviation (%)</label>
+                <input type="number" 
+                       id="trailingDeviation" 
+                       min="0.1" 
+                       step="0.1" 
+                       value="0.3" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                <p class="mt-1 text-sm text-gray-500">Distance to keep from the highest price reached</p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Activation Condition</label>
+                <select id="trailingActivation" 
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    <option value="immediate">Start trailing immediately</option>
+                    <option value="profit">Start when profit reaches</option>
+                </select>
+            </div>
+
+            <div id="trailingActivationProfit" class="hidden">
+                <label class="block text-sm font-medium text-gray-700">Start Trailing at Profit (%)</label>
+                <input type="number" 
+                       id="trailingActivationValue" 
+                       min="0.1" 
+                       step="0.1" 
+                       value="1" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            </div>
+        </div>
+    </div>
+</div>

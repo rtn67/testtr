@@ -1,0 +1,36 @@
+<div class="bg-gray-50 p-4 rounded-lg space-y-4">
+    <div class="flex items-center justify-between">
+        <h4 class="font-medium text-gray-700">DCA Settings</h4>
+        <label class="flex items-center">
+            <input type="checkbox" name="dca_enabled" checked 
+                   class="rounded border-gray-300 text-indigo-600">
+            <span class="ml-2 text-sm font-medium text-gray-700">Enable DCA</span>
+        </label>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Correction Levels (%)</label>
+            <input type="text" name="correction_levels" value="5,10,15,20" 
+                   placeholder="e.g., 5,10,15,20" 
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+            <p class="mt-1 text-sm text-gray-500">Comma-separated percentages</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Order Sizes (%)</label>
+            <input type="text" name="order_sizes" value="20,30,40,50" 
+                   placeholder="e.g., 20,30,40,50" 
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+            <p class="mt-1 text-sm text-gray-500">Percentage of initial investment</p>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Max DCA Orders</label>
+            <input type="number" name="max_orders" value="4" min="1" max="10" 
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Min Order Interval (hours)</label>
+            <input type="number" name="min_order_interval" value="24" min="1" 
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        </div>
+    </div>
+</div>
